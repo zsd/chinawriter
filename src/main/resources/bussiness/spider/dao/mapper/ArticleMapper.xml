@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="bussiness.spider.dao.mapper.ArticleMapper">
+
+    <resultMap id="articleMap" type="bussiness.spider.domain.Article">
+        <result column="id"           property="id"/> <!--主键-->
+        <result column="name"         property="name"/> <!--标题-->
+        <result column="content"      property="content"/> <!--活动内容-->
+        <result column="from_url"     property="fromUrl"/> <!--来源链接-->
+        <result column="from_web"     property="fromWeb"/> <!--来源网站-->
+
+        <result column="is_read"      property="isRead.item"/> <!--是否已读：未读、已读-->
+        <result column="is_focus"     property="isFocus.item"/><!--是否关注：不关注、关注-->
+        <result column="remark"       property="remark"/><!--是否关注：不关注、关注-->
+        <result column="publish_date" property="publishDate"/><!--发布日期-->
+        <result column="create_time"  property="createTime"/>
+
+        <result column="update_time"  property="updateTime"/>
+    </resultMap>
+
+    <sql id="table-name">cw_article</sql>
+
+    <sql id="sqlPart">
+        id,      name,     content,  from_url,     from_web,
+        is_read, is_focus, remark,   publish_date, create_time,
+        update_time
+    </sql>
+
+    <!-- 根据ID获取字典-->
+    <select id="getById" resultMap="articleMap">
+        select
+        <include refid="sqlPart"/>
+        from
+        <include refid="table-name"/>
+        where id = #{id}
+    </select>
+
+    <!--插入-->
+    <insert id="save" parameterType="bussiness.spider.domain.Article">
+        insert into <include refid="table-name"/> (
+        <include refid="sqlPart"/>
+        )
+        values
+        (
+        #{id,           jdbcType=VARCHAR  },
+        #{name,         jdbcType=VARCHAR  },
+        #{content,      jdbcType=VARCHAR  },
+        #{fromUrl,      jdbcType=VARCHAR  },
+        #{fromWeb,      jdbcType=VARCHAR  },
+
+        #{isRead.item,  jdbcType=VARCHAR  },
+        #{isFocus.item, jdbcType=VARCHAR  },
+        #{remark,       jdbcType=VARCHAR  },
+        #{publishDate,  jdbcType=TIMESTAMP},
+        now(),
+
+        now()
+        )
+    </insert>
+
+    <!-- 更新 -->
+    <update id="update" parameterType="bussiness.spider.domain.Article">
+        update <include refid="table-name"/>
+        set is_read = #{isRead.item,  jdbcType=VARCHAR  },
+        is_focus = #{isFocus.item, jdbcType=VARCHAR  },
+        remark = #{remark},
+        update_time = now()
+        where id = #{id}
+    </update>
+
+    <!-- 删除 -->
+    <delete id="delete" parameterType="string">
+        delete from <include refid="table-name"/>
+        where id = #{id}
+    </delete>
+
+    <sql id="if-part">
+        <where>
+            <if test="name != null and name !='' ">
+                and name = #{name}
+            </if>
+        </where>
+    </sql>
+
+    <!-- 查询, 查询记录数 -->
+    <select id="count" resultType="long">
+        select count(id)
+        from <include refid="table-name"/>
+        <include refid="if-part"/>
+    </select>
+
+    <!-- 查询, 1.输入用map传入多个参数 2.<where>语句, 添加where和and关键字 3.输出直接映射对象 -->
+    <select id="search" resultMap="articleMap">
+        select <include refid="sqlPart"/>
+        from <include refid="table-name"/>
+        <include refid="if-part"/>
+        ORDER BY create_time DESC
+        LIMIT #{skip,     jdbcType=NUMERIC  }, #{limit,     jdbcType=NUMERIC  }
+    </select>
+
+</mapper>

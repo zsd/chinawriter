@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="bussiness.spider.dao.mapper.ArticleConfigMapper">
+
+    <resultMap id="articleConfigMap" type="bussiness.spider.domain.ArticleConfig">
+        <result column="id"           property="id"/> <!--主键-->
+        <result column="from_web"     property="fromWeb"/> <!--来源网站-->
+        <result column="list_url"     property="listUrl"/> <!--列表链接-->
+        <result column="article_url"  property="articleUrl"/> <!--文章链接-->
+        <result column="name_path"    property="namePath"/> <!--标题路径-->
+
+        <result column="content_path"         property="contentPath"/> <!--内容路径-->
+        <result column="publish_date_path"    property="publishDatePath"/> <!--发布日期路径-->
+        <result column="publish_date_format"  property="publishDateFormat"/> <!--发布日期格式-->
+        <result column="remark"               property="remark"/> <!--备注-->
+        <result column="create_time"          property="createTime"/>
+        <result column="update_time"          property="updateTime"/>
+    </resultMap>
+
+    <sql id="table-name">cw_article_config</sql>
+
+    <sql id="sqlPart">
+        id,           from_web,          list_url,            article_url, name_path,
+        content_path, publish_date_path, publish_date_format, remark,      create_time,
+        update_time
+    </sql>
+
+    <!--根据ID获取-->
+    <select id="getById" resultMap="articleConfigMap">
+        select
+        <include refid="sqlPart"/>
+        from
+        <include refid="table-name"/>
+        where id = #{id}
+    </select>
+
+    <!--获取全部配置-->
+    <select id="getAll" resultMap="articleConfigMap">
+        select
+        <include refid="sqlPart"/>
+        from
+        <include refid="table-name"/>
+    </select>
+
+    <!--插入-->
+    <insert id="save" parameterType="bussiness.spider.domain.ArticleConfig">
+        insert into <include refid="table-name"/> (
+        <include refid="sqlPart"/>
+        )
+        values
+        (
+        #{id,              jdbcType=VARCHAR  },
+        #{fromWeb,         jdbcType=VARCHAR  },
+        #{listUrl,         jdbcType=VARCHAR  },
+        #{articleUrl,      jdbcType=VARCHAR  },
+        #{namePath,        jdbcType=VARCHAR  },
+
+        #{contentPath,       jdbcType=VARCHAR  },
+        #{publishDatePath,   jdbcType=VARCHAR  },
+        #{publishDateFormat, jdbcType=VARCHAR  },
+        #{remark,            jdbcType=VARCHAR  },
+        now(),
+
+        now()
+        )
+    </insert>
+
+    <!-- 更新 -->
+    <update id="update" parameterType="bussiness.spider.domain.ArticleConfig">
+        update <include refid="table-name"/>
+        set from_web      = #{fromWeb},
+        list_url          = #{listUrl},
+        article_url       = #{articleUrl},
+        name_path         = #{namePath},
+        content_path      = #{contentPath},
+        publish_date_path = #{publishDatePath},
+        publish_date_format = #{publishDateFormat},
+        remark            = #{remark},
+        update_time       = now()
+        where id = #{id}
+    </update>
+
+    <!-- 删除 -->
+    <delete id="delete" parameterType="string">
+        delete from <include refid="table-name"/>
+        where id = #{id}
+    </delete>
+
+    <sql id="if-part">
+        <where>
+            <if test="name != null and name !='' ">
+                and name = #{name}
+            </if>
+        </where>
+    </sql>
+
+    <!-- 查询, 查询记录数 -->
+    <select id="count" resultType="long">
+        select count(id)
+        from <include refid="table-name"/>
+        <include refid="if-part"/>
+    </select>
+
+    <!-- 查询, 1.输入用map传入多个参数 2.<where>语句, 添加where和and关键字 3.输出直接映射对象 -->
+    <select id="search" resultMap="articleConfigMap">
+        select <include refid="sqlPart"/>
+        from <include refid="table-name"/>
+        <include refid="if-part"/>
+        ORDER BY create_time DESC
+        LIMIT #{skip,     jdbcType=NUMERIC  }, #{limit,     jdbcType=NUMERIC  }
+    </select>
+
+</mapper>
