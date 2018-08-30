@@ -26,13 +26,22 @@
         update_time
     </sql>
 
-    <!-- 根据ID获取字典-->
+    <!-- 根据ID获取-->
     <select id="getById" resultMap="articleMap">
         select
         <include refid="sqlPart"/>
         from
         <include refid="table-name"/>
         where id = #{id}
+    </select>
+
+    <!-- 根据ID获取-->
+    <select id="getByFromUrl" resultMap="articleMap">
+        select
+        <include refid="sqlPart"/>
+        from
+        <include refid="table-name"/>
+        where from_url = #{fromUrl}
     </select>
 
     <!--插入-->

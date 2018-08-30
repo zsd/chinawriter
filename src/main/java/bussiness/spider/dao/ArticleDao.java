@@ -36,6 +36,15 @@ public class ArticleDao {
         }
     }
 
+    public Article getByFromUrl(String fromUrl) {
+        try {
+            return articleMapper.getByFromUrl(fromUrl);
+        } catch (Exception e) {
+            logger.debug("Get by fromUrl error!", e);
+            throw new DataAccessException(ArticleModule.ERR_DAO_GETBYID, e);
+        }
+    }
+
     public void save(Article article) {
         try {
             if(StringUtils.isBlank(article.getId())) article.setId(Identities.uuid());

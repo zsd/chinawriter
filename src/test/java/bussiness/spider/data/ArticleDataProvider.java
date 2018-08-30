@@ -1,7 +1,6 @@
 package bussiness.spider.data;
 
 import bussiness.spider.domain.Article;
-import bussiness.spider.domain.ArticleConfig;
 import com.zsd.comm.DataUtilsTest;
 import com.zsd.dic.domain.Dic;
 
@@ -13,6 +12,8 @@ import java.util.Date;
  */
 public final class ArticleDataProvider {
 
+    public static final String FROM_URL = "测试来源链接";
+
     /**
      * 生成实体.
      */
@@ -21,7 +22,7 @@ public final class ArticleDataProvider {
         obj.setId(DataUtilsTest.ID_1);
         obj.setName("测试标题");
         obj.setFromWeb("中国作家网");
-        obj.setFromUrl("测试来源链接");
+        obj.setFromUrl(FROM_URL);
         obj.setPublishDate(new Date());
         obj.setIsRead(new Dic("未读"));
         obj.setIsFocus(new Dic("已关注"));

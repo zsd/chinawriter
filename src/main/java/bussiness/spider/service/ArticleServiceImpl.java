@@ -58,6 +58,16 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    public Article getByFromUrl(String fromUrl) {
+        try {
+            return articleDao.getByFromUrl(fromUrl);
+        } catch (Exception e) {
+            logger.error("Get by id error!", e);
+            throw new ServiceException(ArticleModule.ERR_SEV_GETBYID, e);
+        }
+    }
+
+    @Override
     public void save(Article article) {
         try {
             articleDao.save(article);

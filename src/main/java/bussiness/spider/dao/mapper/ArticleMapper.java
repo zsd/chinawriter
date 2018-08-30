@@ -19,6 +19,11 @@ public interface ArticleMapper {
     Article getById(String id);
 
     /**
+     * 根据fromUrl获取.
+     */
+    Article getByFromUrl(String fromUrl);
+
+    /**
      * 保存.
      */
     void save(Article article);

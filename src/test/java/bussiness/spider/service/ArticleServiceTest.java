@@ -41,6 +41,15 @@ public class ArticleServiceTest extends AbstractTest {
     }
 
     /**
+     * 测试获取.
+     */
+    @Test
+    public void testGetByFromUrl() {
+        Article article = articleService.getByFromUrl(ArticleDataProvider.FROM_URL);
+        Assert.assertNotNull(article);
+    }
+
+    /**
      * 测试更新.
      */
     @Test
