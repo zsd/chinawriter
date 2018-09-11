@@ -69,11 +69,9 @@ $(function () {
 
     //查询
     $("#submit").click(function () {
-        var name = $("#name").val();
-        var gender = $("#gender").val();
+        var keyWord = $("#keyWord").val();
         var parameter = {
-            name:name,
-            gender:gender
+            keyWord:keyWord
         };
         searchData(url,parameter);
     });
@@ -139,11 +137,11 @@ function gotoPage(newPageNo){
     $("[name='pageNo']").val(newPageNo);
     var pageNo = $("input[name='pageNo']").val();
     var pageSize = $("input[name='pageSize']").val();
-    var name = $("#name").val();
+    var keyWord = $("#keyWord").val();
     var args = {
         pageNo:pageNo,
         pageSize:pageSize,
-        name:name
+        keyWord:keyWord
     };
     searchData(url, args);
 }
@@ -152,8 +150,14 @@ function gotoPage(newPageNo){
 function showDetail(id) {
     var data =  $('.rowIdImput[value='+id+']').data("datas") ;
     $("input[name=id]").val(data.id);
-    $("input[name=name]").val(data.name);
-    $("input[name=gender]").val(data.gender);
+    $("input[name=fromWeb]").val(data.fromWeb);
+    $("input[name=listUrl]").val(data.listUrl);
+    $("input[name=articleUrl]").val(data.articleUrl);
+    $("input[name=namePath]").val(data.namePath);
+    $("input[name=contentPath]").val(data.contentPath);
+    $("input[name=publishDatePath]").val(data.publishDatePath);
+    $("input[name=publishDateFormat]").val(data.publishDateFormat);
+    $("input[name=remark]").val(data.remark);
     $("#myModal").modal("show");
 }
 
@@ -212,18 +216,46 @@ function formatDate (strTime) {
 
 //保存
 function save() {
+
     var id = $("input[name=id]").val();
-    var name = $("input[name=name]").val();
-    var gender = $("input[name=gender]").val();
+    var fromWeb = $("input[name=fromWeb]").val();
+    var listUrl = $("input[name=listUrl]").val();
+    var articleUrl = $("input[name=articleUrl]").val();
+    var namePath = $("input[name=namePath]").val();
+    var contentPath = $("input[name=contentPath]").val();
+    var publishDatePath = $("input[name=publishDatePath]").val();
+    var publishDateFormat = $("input[name=publishDateFormat]").val();
+    var remark = $("input[name=remark]").val();
 
     var objectEq = {
         id:id,
-        name:name,
-        gender:gender
+        fromWeb:fromWeb,
+        listUrl:listUrl,
+        articleUrl:articleUrl,
+        namePath:namePath,
+        contentPath:contentPath,
+        publishDatePath:publishDatePath,
+        publishDateFormat:publishDateFormat,
+        remark:remark
     } ;
 
-    if (name == null || name == "") {
-        jAlert('请填写名称！', '提示');
+    if (fromWeb == null || fromWeb == "") {
+        jAlert('请填写来源网站！', '提示');
+        return;
+    }
+
+    if (listUrl == null || listUrl == "") {
+        jAlert('请填写列表链接！', '提示');
+        return;
+    }
+
+    if (articleUrl == null || articleUrl == "") {
+        jAlert('请填写文章链接！', '提示');
+        return;
+    }
+
+    if (namePath == null || namePath == "") {
+        jAlert('请填写名称路径！', '提示');
         return;
     }
 
@@ -257,8 +289,14 @@ function save() {
 }
 function addFn(){
     $("input[name=id]").val("");
-    $("input[name=name]").val("");
-    $("input[name=gender]").val("");
+    $("input[name=fromWeb]").val("");
+    $("input[name=listUrl]").val("");
+    $("input[name=articleUrl]").val("");
+    $("input[name=namePath]").val("");
+    $("input[name=contentPath]").val("");
+    $("input[name=publishDatePath]").val("");
+    $("input[name=publishDateFormat]").val("");
+    $("input[name=remark]").val("");
 
     $("#myModal").modal("show");
 }

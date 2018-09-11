@@ -67,28 +67,6 @@ public class ArticleController {
         return ret;
     }
 
-//    /**
-//     * 保存数据.
-//     */
-//    @RequestMapping(value = "save", method = RequestMethod.POST)
-//    @ResponseBody
-//    public Map<String, Object> save(String json) {
-//        logger.debug("save json : {}", json);
-//        try {
-//            Article article = jsonMapper.fromJson(json, Article.class);
-//            if (StringUtils.isNotBlank(article.getId())) {
-//                articleService.update(article);
-//            } else {
-//                articleService.save(article);
-//            }
-//            return ControllerUtils.responseBuilder(ControllerUtils.CODE_SUCCESS, "保存成功!");
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            logger.debug(e.getMessage());
-//            return ControllerUtils.responseBuilder(ControllerUtils.CODE_ERROR, "保存失败!");
-//        }
-//    }
-
     @RequestMapping(value = "delete", method = RequestMethod.GET)
     @ResponseBody
     public Map<String, Object> delete(String idStr) {

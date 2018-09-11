@@ -1,7 +1,7 @@
 var date = new Date();
 var month = (date.getMonth()+1);
 var nowDate = date.getFullYear()+(month<10?("-0"+month):("-"+month))+((date.getDate())<10?("-0"+(date.getDate())):("-"+(date.getDate())));
-var url = ctx+"/example/search";
+var url = ctx+"/article/search";
 $(function () {
 
     //默认
@@ -47,7 +47,39 @@ $(function () {
                 $.ajax( {
                     dataType: "json",
                     type: "get",
-                    url: ctx+"/example/delete?idStr=" + idStr,
+                    url: ctx+"/article/delete?idStr=" + idStr,
+                    success:function(data){
+                        if (data.code == "200") {
+                            jAlert(data.msg, '提示');
+                            var pageNo = 1;
+                            var pageSize = 10;
+                            var parameter = {
+                                pageNo:pageNo,
+                                pageSize:pageSize
+                            };
+                            searchData(url, parameter);
+                        } else {
+                            jAlert(data.msg, '提示');
+                        }
+                    }
+                }) ;
+            }
+        });
+    });
+
+    //批量关注 TODO
+    $("#focus").click(function () {
+        var idStr = getSelectId();
+        if (idStr == "") {
+            jAlert('请选择要删除的记录！', '提示');
+            return;
+        }
+        jConfirm('确定要删除记录?', '提示', function(r) {
+            if( r ){
+                $.ajax( {
+                    dataType: "json",
+                    type: "get",
+                    url: ctx+"/article/delete?idStr=" + idStr,
                     success:function(data){
                         if (data.code == "200") {
                             jAlert(data.msg, '提示');
@@ -99,14 +131,15 @@ function searchData(url,data){
             var table = '';
             try {
                 for (var i=0;i<result.length;i++) {
-
                     table +=
                         '<tr>'+
                         '<td><input class="rowIdImput" type="checkbox" name="items" value="'+ result[i].id +'"></td>'+
                         '<td>'+ result[i].name + '</td>'+
-                        '<td>'+ result[i].gender + '</td>';
+                        '<td>'+ result[i].fromWeb + '</td>'+
+                        '<td>'+ formatDate(result[i].publishDate) + '</td>'+
+                        '<td>'+ formatDate(result[i].createTime) + '</td>';
                     table +=
-                        '<td><button type="button" onclick="showDetail(\''+result[i].id+'\')" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>&nbsp;编辑</button></td>'+
+                        '<td><button type="button" onclick="showDetail(\''+result[i].id+'\')" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>&nbsp;详情</button></td>'+
                         '</tr>';
                 }
                 //添加列表数据
@@ -152,7 +185,11 @@ function showDetail(id) {
     var data =  $('.rowIdImput[value='+id+']').data("datas") ;
     $("input[name=id]").val(data.id);
     $("input[name=name]").val(data.name);
-    $("input[name=gender]").val(data.gender);
+    $("input[name=content]").val(data.content);
+    $("input[name=fromUrl]").val(data.fromUrl);
+    $("input[name=fromWeb]").val(data.fromWeb);
+    $("input[name=publishDate]").val(formatDate(data.publishDate));
+    $("input[name=remark]").val(data.remark);
     $("#myModal").modal("show");
 }
 
@@ -207,59 +244,6 @@ function formatDate (strTime) {
     var date = new Date(strTime);
     var month = (date.getMonth()+1);
     return date.getFullYear()+(month<10?("-0"+month):("-"+month))+((date.getDate())<10?("-0"+(date.getDate())):("-"+(date.getDate())));
-}
-
-//保存
-function save() {
-    var id = $("input[name=id]").val();
-    var name = $("input[name=name]").val();
-    var gender = $("input[name=gender]").val();
-
-    var objectEq = {
-        id:id,
-        name:name,
-        gender:gender
-    } ;
-
-    if (name == null || name == "") {
-        jAlert('请填写名称！', '提示');
-        return;
-    }
-
-    $("#saveYes").hide();
-    $("#saveNo").show();
-    var json = {json:JSON.stringify(objectEq)};
-    $.ajax( {
-        dataType: "json",
-        type: "post",
-        url: ctx+"/example/save",
-        data:json,
-        success:function(data){
-            if (data.code == "200") {
-                $("#myModal").modal("hide");
-                jAlert(data.msg, '提示');
-                var pageNo = 1;
-                var pageSize = 10;
-                var parameter = {
-                    pageNo:pageNo,
-                    pageSize:pageSize
-                };
-                searchData(url, parameter);
-            } else {
-                jAlert(data.msg, '提示');
-            }
-            $("#saveYes").show();
-            $("#saveNo").hide();
-        }
-    }) ;
-
-}
-function addFn(){
-    $("input[name=id]").val("");
-    $("input[name=name]").val("");
-    $("input[name=gender]").val("");
-
-    $("#myModal").modal("show");
 }
 
 //导出数据

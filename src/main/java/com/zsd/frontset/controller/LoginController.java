@@ -74,7 +74,7 @@ public class LoginController {
 
         map.put("用户管理", "fs_csview_naviimgs3");
         map.put("系统管理", "fs_csview_naviimgs10");
-        map.put("作品管理", "fs_csview_naviimgs6");
+        map.put("活动采集", "fs_csview_naviimgs6");
 
 
         List<Map<String, String>> bannerMenuList = new ArrayList<>();

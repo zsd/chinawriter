@@ -4,6 +4,7 @@ import bussiness.spider.domain.ArticleConfig;
 import bussiness.spider.service.ArticleConfigService;
 import com.zsd.comm.orm.Page;
 import com.zsd.comm.utils.ControllerUtils;
+import com.zsd.comm.utils.Identities;
 import com.zsd.comm.utils.JsonMapper;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -79,6 +80,7 @@ public class ArticleConfigController {
             if (StringUtils.isNotBlank(articleConfig.getId())) {
                 articleConfigService.update(articleConfig);
             } else {
+                articleConfig.setId(Identities.uuid());
                 articleConfigService.save(articleConfig);
             }
             return ControllerUtils.responseBuilder(ControllerUtils.CODE_SUCCESS, "保存成功!");

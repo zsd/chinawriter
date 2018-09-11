@@ -6,7 +6,7 @@
 <html lang="zh-CN">
 <head>
 	<%@ include file="/common/meta.jsp"%>
-	<script type="text/javascript" src="${ctx}/js/bussiness/article/articleConfig.js"></script>
+	<script type="text/javascript" src="${ctx}/js/bussiness/article/article.js"></script>
 	<style>
 		td{
 			line-height: 30px!important;
@@ -63,8 +63,7 @@
 							<tr>
 								<th><input type="checkbox" class="alltoggle" id="selectAll"></th>
 								<th>标题</th>
-								<th>活动内容</th>
-								<th>来源链接</th>
+								<th>来源网站</th>
 								<th>发布日期</th>
 								<th>采集日期</th>
 								<th>操作</th>
@@ -99,48 +98,40 @@
 						<form id="saveForm" name="saveForm" method="post">
 							<input type="hidden" class="form-control" name="id" >
 							<div class="col-md-12">
-								<label><font color="red">*</font>来源网址：</label>
-								<input type="text" class="form-control" name="fromWeb" placeholder="中国作家网">
+								<label>标题：</label>
+								<input type="text" class="form-control" name="name">
 							</div>
 							<div class="col-md-12">
-								<label><font color="red">*</font>列表链接：</label>
-								<input type="text" class="form-control" name="listUrl" placeholder="http://www.chinawriter.com.cn/403982/index.html">
+								<label>来源网站：</label>
+								<input type="text" class="form-control" name="fromWeb">
 							</div>
 							<div class="col-md-12">
-								<label><font color="red">*</font>文章链接：</label>
-								<input type="text" class="form-control" name="articleUrl" placeholder="(http://www.chinawriter.com.cn/n1/([0-9]*)/([0-9]*)/c[0-9]*-[0-9]*.html)">
+								<label>来源链接：</label>
+								<input type="text" class="form-control" name="fromUrl">
 							</div>
 							<div class="col-md-12">
-								<label><font color="red">*</font>标题路径：</label>
-								<input type="text" class="form-control" name="namePath" placeholder="//div[@class='list_warp']/h6/em/text()">
+								<label>发布日期：</label>
+								<input type="text" class="form-control" name="publishDate">
 							</div>
 							<div class="col-md-12">
-								<label>内容路径：</label>
-								<input type="text" class="form-control" name="contentPath" placeholder="//div[@class='end_info']/p/em/text()">
-							</div>
-							<div class="col-md-12">
-								<label>发布日期路径：</label>
-								<input type="text" class="form-control" name="publishDatePath" placeholder="//div[@class='end_article']//p//text()">
-							</div>
-							<div class="col-md-12">
-								<label>日期格式：</label>
-								<input type="text" class="form-control" name="publishDateFormat" placeholder="yyyy年MM月dd日HH:mm">
+								<label>内容：</label>
+								<input type="text" class="form-control" name="content">
 							</div>
 							<div class="col-md-12">
 								<label>备注：</label>
-								<input type="textarea" class="form-control" name="remark" placeholder="备注">
+								<input type="text" class="form-control" name="remark">
 							</div>
 						</form>
 					</div>
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button id="saveYes" type="button" class="btn btn-primary" onclick="save();">
-					保存
-				</button>
-				<button id="saveNo" type="button" class="btn" style="display:none;">
-					保存
-				</button>
+				<%--<button id="saveYes" type="button" class="btn btn-primary" onclick="save();">--%>
+					<%--保存--%>
+				<%--</button>--%>
+				<%--<button id="saveNo" type="button" class="btn" style="display:none;">--%>
+					<%--保存--%>
+				<%--</button>--%>
 				<button type="button" class="btn btn-default"
 						data-dismiss="modal">取消
 				</button>
