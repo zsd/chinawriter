@@ -18,8 +18,8 @@ public class UserDataProvider {
     public static User getUser() {
         User user = new User();
         user.setId(DataUtilsTest.ID_1);
-        user.setName("测试用户_001");
-        user.setLoginName("test1");
+        user.setName("系统管理员");
+        user.setLoginName("admin");
         user.setPassword("123");
         user.setPhone("18681891234");
         user.setEmail("test1@sina.com");

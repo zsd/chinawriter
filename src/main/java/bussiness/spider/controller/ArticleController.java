@@ -1,7 +1,7 @@
 package bussiness.spider.controller;
 
-import bussiness.spider.domain.ArticleConfig;
-import bussiness.spider.service.ArticleConfigService;
+import bussiness.spider.domain.Article;
+import bussiness.spider.service.ArticleService;
 import com.zsd.comm.orm.Page;
 import com.zsd.comm.utils.ControllerUtils;
 import com.zsd.comm.utils.JsonMapper;
@@ -20,17 +20,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 作协活动采集配置控制器.
+ * 作协活动控制器.
  * @author zhousd
  */
 @Controller
-@RequestMapping("article/config")
-public class ArticleConfigController {
+@RequestMapping("article")
+public class ArticleController {
 
-    private static Logger logger = LoggerFactory.getLogger(ArticleConfigController.class);
+    private static Logger logger = LoggerFactory.getLogger(ArticleController.class);
 
     @Autowired
-    private ArticleConfigService articleConfigService;
+    private ArticleService articleService;
 
     private JsonMapper jsonMapper = new JsonMapper();
 
@@ -40,7 +40,7 @@ public class ArticleConfigController {
     @RequestMapping(value = "list", method = RequestMethod.GET)
     public ModelAndView gotoPageOne() {
         ModelAndView mv = new ModelAndView();
-        mv.setViewName("article/config/list");
+        mv.setViewName("article/list");
         return mv;
     }
 
@@ -53,7 +53,7 @@ public class ArticleConfigController {
                          @RequestParam(required = false) Integer pageNo,
                          @RequestParam(required = false) Integer pageSize) {
 
-        Page<ArticleConfig> page = new Page<>();
+        Page<Article> page = new Page<>();
         if (pageNo != null && pageSize != null) {
             page.setPageNo(pageNo);
             page.setPageSize(pageSize);
@@ -62,39 +62,39 @@ public class ArticleConfigController {
         Map<String, Object> param = new HashMap<>();
         param.put("keyWord", keyWord);
 
-        page = articleConfigService.search(page, param);
+        page = articleService.search(page, param);
         String ret = jsonMapper.toJson(page);
         return ret;
     }
 
-    /**
-     * 保存数据.
-     */
-    @RequestMapping(value = "save", method = RequestMethod.POST)
-    @ResponseBody
-    public Map<String, Object> save(String json) {
-        logger.debug("save json : {}", json);
-        try {
-            ArticleConfig articleConfig = jsonMapper.fromJson(json, ArticleConfig.class);
-            if (StringUtils.isNotBlank(articleConfig.getId())) {
-                articleConfigService.update(articleConfig);
-            } else {
-                articleConfigService.save(articleConfig);
-            }
-            return ControllerUtils.responseBuilder(ControllerUtils.CODE_SUCCESS, "保存成功!");
-        } catch (Exception e) {
-            e.printStackTrace();
-            logger.debug(e.getMessage());
-            return ControllerUtils.responseBuilder(ControllerUtils.CODE_ERROR, "保存失败!");
-        }
-    }
+//    /**
+//     * 保存数据.
+//     */
+//    @RequestMapping(value = "save", method = RequestMethod.POST)
+//    @ResponseBody
+//    public Map<String, Object> save(String json) {
+//        logger.debug("save json : {}", json);
+//        try {
+//            Article article = jsonMapper.fromJson(json, Article.class);
+//            if (StringUtils.isNotBlank(article.getId())) {
+//                articleService.update(article);
+//            } else {
+//                articleService.save(article);
+//            }
+//            return ControllerUtils.responseBuilder(ControllerUtils.CODE_SUCCESS, "保存成功!");
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            logger.debug(e.getMessage());
+//            return ControllerUtils.responseBuilder(ControllerUtils.CODE_ERROR, "保存失败!");
+//        }
+//    }
 
     @RequestMapping(value = "delete", method = RequestMethod.GET)
     @ResponseBody
     public Map<String, Object> delete(String idStr) {
         logger.debug("delete ids : {}", idStr);
         try {
-            articleConfigService.delete(idStr);
+            articleService.delete(idStr);
             return ControllerUtils.responseBuilder(ControllerUtils.CODE_SUCCESS, "删除成功!");
         } catch (Exception e) {
             logger.debug(e.getMessage());

@@ -62,9 +62,11 @@
 							<thead style="background-color: gainsboro;">
 							<tr>
 								<th><input type="checkbox" class="alltoggle" id="selectAll"></th>
-								<th>来源网站</th>
-								<th>备注</th>
-								<th>创建时间</th>
+								<th>标题</th>
+								<th>活动内容</th>
+								<th>来源链接</th>
+								<th>发布日期</th>
+								<th>采集日期</th>
 								<th>操作</th>
 							</tr>
 							</thead>

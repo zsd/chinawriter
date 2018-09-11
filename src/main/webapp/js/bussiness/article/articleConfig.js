@@ -1,7 +1,7 @@
 var date = new Date();
 var month = (date.getMonth()+1);
 var nowDate = date.getFullYear()+(month<10?("-0"+month):("-"+month))+((date.getDate())<10?("-0"+(date.getDate())):("-"+(date.getDate())));
-var url = ctx+"/example/search";
+var url = ctx+"/article/config/search";
 $(function () {
 
     //默认
@@ -47,7 +47,7 @@ $(function () {
                 $.ajax( {
                     dataType: "json",
                     type: "get",
-                    url: ctx+"/example/delete?idStr=" + idStr,
+                    url: ctx+"/article/config/delete?idStr=" + idStr,
                     success:function(data){
                         if (data.code == "200") {
                             jAlert(data.msg, '提示');
@@ -103,8 +103,9 @@ function searchData(url,data){
                     table +=
                         '<tr>'+
                         '<td><input class="rowIdImput" type="checkbox" name="items" value="'+ result[i].id +'"></td>'+
-                        '<td>'+ result[i].name + '</td>'+
-                        '<td>'+ result[i].gender + '</td>';
+                        '<td>'+ result[i].fromWeb + '</td>'+
+                        '<td>'+ result[i].remark + '</td>'+
+                        '<td>'+ formatDate(result[i].createTime) + '</td>';
                     table +=
                         '<td><button type="button" onclick="showDetail(\''+result[i].id+'\')" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>&nbsp;编辑</button></td>'+
                         '</tr>';
@@ -232,7 +233,7 @@ function save() {
     $.ajax( {
         dataType: "json",
         type: "post",
-        url: ctx+"/example/save",
+        url: ctx+"/article/config/save",
         data:json,
         success:function(data){
             if (data.code == "200") {
