@@ -79,4 +79,13 @@ public class ArticleController {
             return ControllerUtils.responseBuilder(ControllerUtils.CODE_ERROR, "删除失败!");
         }
     }
+
+    @RequestMapping(value = "spider", method = RequestMethod.GET)
+    public void spider() {
+        try {
+            articleService.spider();
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+        }
+    }
 }

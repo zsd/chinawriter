@@ -13,6 +13,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,7 +40,9 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     @Scheduled(cron= "0 0 1 * * ?")
+    @Async
     public void spider() {
+        logger.debug("start time:" + System.currentTimeMillis());
         //1、查出配置
         List<ArticleConfig> articleConfigList = articleConfigService.getAll();
         //2、根据配置，启动爬虫
@@ -47,6 +50,7 @@ public class ArticleServiceImpl implements ArticleService {
         for (ArticleConfig articleConfig : articleConfigList) {
             Spider.create(new ArticleSpider(articleConfig, articleDao)).addUrl(articleConfig.getListUrl()).thread(5).run();
         }
+        logger.debug("end time:" + System.currentTimeMillis());
     }
 
     @Override

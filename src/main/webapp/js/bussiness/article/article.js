@@ -99,6 +99,29 @@ $(function () {
         });
     });
 
+    //采集
+    $("#spider").click(function () {
+        $.ajax({
+            dataType: "json",
+            type: "get",
+            url: ctx + "/article/spider",
+            success: function (data) {
+                if (data.code == "200") {
+                    jAlert('采集中，请稍等。', '提示');
+                    var pageNo = 1;
+                    var pageSize = 10;
+                    var parameter = {
+                        pageNo: pageNo,
+                        pageSize: pageSize
+                    };
+                    searchData(url, parameter);
+                } else {
+                    jAlert('采集中，请与管理员联系。', '提示');
+                }
+            }
+        });
+    });
+
     //查询
     $("#submit").click(function () {
         var name = $("#name").val();
@@ -247,6 +270,6 @@ function formatDate (strTime) {
 }
 
 //导出数据
-function exportXml(){
+function excute(){
     jAlert('待开发！', '提示');
 }
