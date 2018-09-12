@@ -2,6 +2,7 @@ package bussiness.spider.controller;
 
 import bussiness.spider.domain.Article;
 import bussiness.spider.service.ArticleService;
+import bussiness.spider.service.SpiderStatusService;
 import com.zsd.comm.orm.Page;
 import com.zsd.comm.utils.ControllerUtils;
 import com.zsd.comm.utils.JsonMapper;
@@ -32,6 +33,9 @@ public class ArticleController {
     @Autowired
     private ArticleService articleService;
 
+    @Autowired
+    private SpiderStatusService spiderStatusService;
+
     private JsonMapper jsonMapper = new JsonMapper();
 
     /**
@@ -40,6 +44,7 @@ public class ArticleController {
     @RequestMapping(value = "list", method = RequestMethod.GET)
     public ModelAndView gotoPageOne() {
         ModelAndView mv = new ModelAndView();
+        mv.addObject("spiderStatus", spiderStatusService.get());
         mv.setViewName("article/list");
         return mv;
     }

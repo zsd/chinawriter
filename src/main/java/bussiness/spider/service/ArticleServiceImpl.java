@@ -4,6 +4,7 @@ import bussiness.spider.ArticleModule;
 import bussiness.spider.dao.ArticleDao;
 import bussiness.spider.domain.Article;
 import bussiness.spider.domain.ArticleConfig;
+import bussiness.spider.domain.SpiderStatus;
 import bussiness.spider.service.pipeline.TaobaoJsonPipeline;
 import bussiness.spider.service.spider.ArticleSpider;
 import bussiness.spider.service.spider.TaobaoSpider;
@@ -36,21 +37,32 @@ public class ArticleServiceImpl implements ArticleService {
     private ArticleDao articleDao;
 
     @Autowired
+    private SpiderStatusService spiderStatusService;
+
+    @Autowired
     private ArticleConfigService articleConfigService;
 
     @Override
     @Scheduled(cron= "0 0 1 * * ?")
     @Async
     public void spider() {
-        logger.debug("start time:" + System.currentTimeMillis());
-        //1、查出配置
-        List<ArticleConfig> articleConfigList = articleConfigService.getAll();
-        //2、根据配置，启动爬虫
-        if (CollectionUtils.isEmpty(articleConfigList)) return;
-        for (ArticleConfig articleConfig : articleConfigList) {
-            Spider.create(new ArticleSpider(articleConfig, articleDao)).addUrl(articleConfig.getListUrl()).thread(5).run();
+        try {
+            logger.debug("start time:" + System.currentTimeMillis());
+            spiderStatusService.updateStatus(SpiderStatus.STATUS_EXEING);
+            Thread.sleep(1000);
+            //1、查出配置
+            List<ArticleConfig> articleConfigList = articleConfigService.getAll();
+            //2、根据配置，启动爬虫
+            if (CollectionUtils.isEmpty(articleConfigList)) return;
+            for (ArticleConfig articleConfig : articleConfigList) {
+                Spider.create(new ArticleSpider(articleConfig, articleDao)).addUrl(articleConfig.getListUrl()).thread(5).run();
+            }
+            logger.debug("end time:" + System.currentTimeMillis());
+        } catch (Exception e) {
+            logger.error("execute spider error!", e);
+        } finally {
+            spiderStatusService.updateStatus(SpiderStatus.STATUS_NOEXE);
         }
-        logger.debug("end time:" + System.currentTimeMillis());
     }
 
     @Override
