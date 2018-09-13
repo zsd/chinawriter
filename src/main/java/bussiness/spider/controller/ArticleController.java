@@ -1,6 +1,7 @@
 package bussiness.spider.controller;
 
 import bussiness.spider.domain.Article;
+import bussiness.spider.domain.SpiderStatus;
 import bussiness.spider.service.ArticleService;
 import bussiness.spider.service.SpiderStatusService;
 import com.zsd.comm.orm.Page;
@@ -77,7 +78,7 @@ public class ArticleController {
     public Map<String, Object> delete(String idStr) {
         logger.debug("delete ids : {}", idStr);
         try {
-            articleService.delete(idStr);
+            articleService.deleteByIds(idStr);
             return ControllerUtils.responseBuilder(ControllerUtils.CODE_SUCCESS, "删除成功!");
         } catch (Exception e) {
             logger.debug(e.getMessage());
@@ -88,9 +89,12 @@ public class ArticleController {
     @RequestMapping(value = "spider", method = RequestMethod.GET)
     public void spider() {
         try {
+            spiderStatusService.updateStatus(SpiderStatus.STATUS_EXEING);
             articleService.spider();
         } catch (Exception e) {
             logger.error(e.getMessage());
+        } finally {
+            spiderStatusService.updateStatus(SpiderStatus.STATUS_NOEXE);
         }
     }
 }

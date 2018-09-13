@@ -38,6 +38,12 @@ public interface ArticleService {
 
     /**
      * 删除.
+     * @param ids id列表,以逗号分开
+     */
+    void deleteByIds(String ids);
+
+    /**
+     * 删除.
      */
     void delete(String id);
 

@@ -35,19 +35,14 @@ public class ArticleServiceImpl implements ArticleService {
     private ArticleDao articleDao;
 
     @Autowired
-    private SpiderStatusService spiderStatusService;
-
-    @Autowired
     private ArticleConfigService articleConfigService;
 
     @Override
     @Scheduled(cron= "0 0 1 * * ?")
-    @Async
     public void spider() {
         try {
             logger.debug("start time:" + System.currentTimeMillis());
-            spiderStatusService.updateStatus(SpiderStatus.STATUS_EXEING);
-            Thread.sleep(10000);
+            Thread.sleep(100000);
             //1、查出配置
             List<ArticleConfig> articleConfigList = articleConfigService.getAll();
             //2、根据配置，启动爬虫
@@ -58,8 +53,6 @@ public class ArticleServiceImpl implements ArticleService {
             logger.debug("end time:" + System.currentTimeMillis());
         } catch (Exception e) {
             logger.error("execute spider error!", e);
-        } finally {
-            spiderStatusService.updateStatus(SpiderStatus.STATUS_NOEXE);
         }
     }
 
@@ -100,6 +93,14 @@ public class ArticleServiceImpl implements ArticleService {
         } catch (Exception e) {
             logger.error("Save article error!", e);
             throw new ServiceException(ArticleModule.ERR_SEV_SAVE, e);
+        }
+    }
+
+    @Override
+    public void deleteByIds(String ids) {
+        String[] idArray = ids.split(",");
+        for (String id : idArray) {
+            this.delete(id);
         }
     }
 

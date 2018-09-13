@@ -101,6 +101,7 @@ $(function () {
 
     //采集
     $("#spider").click(function () {
+        $("#spider").attr('disabled',true);
         $.ajax({
             dataType: "json",
             type: "get",

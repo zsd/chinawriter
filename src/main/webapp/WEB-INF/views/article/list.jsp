@@ -45,21 +45,16 @@
 								<button type="button" id="del" class="btn btn-default">
 									删除<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
 								</button>
-
-
 								<c:choose>
 									<c:when test="${spiderStatus.status eq '执行中'}">
-										<button type="button" id="spider1" class="btn btn-default">
-											采集中<span class="glyphicon glyphicon-download-alt" aria-hidden="true" disabled="disabled"></span>
+										<button type="button" id="spider1" class="btn btn-default" disabled="disabled">
+											采集中,启动时间：<fmt:formatDate pattern="yyyy-MM-dd hh:mm:ss"  value="${spiderStatus.createTime}"/>
 										</button>
 									</c:when>
 									<c:otherwise>
 										<button type="button" id="spider" class="btn btn-default">
 											采集<span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
 										</button>
-										<label>
-											<fmt:parseDate value="${spiderStatus.createTime}" pattern="yyyy-MM-dd hh:mm:ss"/>
-										</label>
 									</c:otherwise>
 								</c:choose>
 							</div>
