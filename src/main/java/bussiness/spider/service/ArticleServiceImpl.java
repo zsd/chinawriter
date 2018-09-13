@@ -5,9 +5,7 @@ import bussiness.spider.dao.ArticleDao;
 import bussiness.spider.domain.Article;
 import bussiness.spider.domain.ArticleConfig;
 import bussiness.spider.domain.SpiderStatus;
-import bussiness.spider.service.pipeline.TaobaoJsonPipeline;
 import bussiness.spider.service.spider.ArticleSpider;
-import bussiness.spider.service.spider.TaobaoSpider;
 import com.zsd.comm.exception.ServiceException;
 import com.zsd.comm.orm.Page;
 import org.apache.commons.collections.CollectionUtils;
@@ -49,7 +47,7 @@ public class ArticleServiceImpl implements ArticleService {
         try {
             logger.debug("start time:" + System.currentTimeMillis());
             spiderStatusService.updateStatus(SpiderStatus.STATUS_EXEING);
-            Thread.sleep(1000);
+            Thread.sleep(10000);
             //1、查出配置
             List<ArticleConfig> articleConfigList = articleConfigService.getAll();
             //2、根据配置，启动爬虫
