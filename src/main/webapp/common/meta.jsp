@@ -13,7 +13,7 @@
 <meta name="author" content="">
 <link rel="icon" href="static/portal/images/favicon.ico">
 
-<title>试运行</title>
+<title>作协活动采集平台</title>
 
 
 <!-- Bootstrap start -->

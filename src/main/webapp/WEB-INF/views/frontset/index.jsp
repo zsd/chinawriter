@@ -12,7 +12,7 @@
 
     <%@include file="/WEB-INF/views/inc/include.jsp"%>
     <link rel="icon" href="static/portal/images/favicon.ico">
-    <title>试运行</title>
+    <title>作协活动采集平台</title>
 
     <link rel="stylesheet" type="text/css" href="<c:url value='/static/portal/style/main-frame.css'/>" />
     <link rel="stylesheet" type="text/css" href="<c:url value='/static/portal/style/frame.css'/>" />
@@ -203,7 +203,7 @@
 <!--main end-->
 <!--bot begain-->
 <div region="south" split="false" style="height: 30px;">
-    <div class="bot_wrap_right">copyright &copy; 2018-2019 试运行小组
+    <div class="bot_wrap_right">copyright &copy; 2018-2019 作协活动采集平台小组
         (推荐浏览器：chrome、360极速浏览器、IE9.0以上等)
     </div>
 </div>
