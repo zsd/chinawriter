@@ -103,7 +103,7 @@
         select <include refid="sqlPart"/>
         from <include refid="table-name"/>
         <include refid="if-part"/>
-        ORDER BY create_time DESC
+        ORDER BY publishDate DESC
         LIMIT #{skip,     jdbcType=NUMERIC  }, #{limit,     jdbcType=NUMERIC  }
     </select>
 

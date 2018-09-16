@@ -37,11 +37,11 @@
 					<div class="row" style="margin-bottom: 10px;">
 						<div class="col-sm-7">
 							<div role="toolbar" class="btn-toolbar">
-								<div class="btn-group dropup">
-									<button type="button" class="btn btn-success dropdown-toggle"  onclick="addFn();">
-										新增 <span class="glyphicon glyphicon-plus"></span>
-									</button>
-								</div>
+								<%--<div class="btn-group dropup">--%>
+									<%--<button type="button" class="btn btn-success dropdown-toggle"  onclick="addFn();">--%>
+										<%--新增 <span class="glyphicon glyphicon-plus"></span>--%>
+									<%--</button>--%>
+								<%--</div>--%>
 								<button type="button" id="del" class="btn btn-default">
 									删除<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
 								</button>
@@ -104,8 +104,6 @@
 			<div class="modal-body">
 				<div class="panel-body">
 					<div class="col-md-12">
-						<form id="saveForm" name="saveForm" method="post">
-							<input type="hidden" class="form-control" name="id" >
 							<div class="col-md-12">
 								<label>标题：</label>
 								<input type="text" class="form-control" name="name">

@@ -156,14 +156,15 @@ function searchData(url,data){
             try {
                 for (var i=0;i<result.length;i++) {
                     table +=
-                        '<tr>'+
+                        '<tr>' +
                         '<td><input class="rowIdImput" type="checkbox" name="items" value="'+ result[i].id +'"></td>'+
-                        '<td>'+ result[i].name + '</td>'+
+                        '<td><a href="'+ result[i].fromUrl +'" target="view_window">'+ result[i].name + '</a></td>'+
+                        // '<td>'+ result[i].name + '</td>'+
                         '<td>'+ result[i].fromWeb + '</td>'+
                         '<td>'+ formatDate(result[i].publishDate) + '</td>'+
                         '<td>'+ formatDate(result[i].createTime) + '</td>';
                     table +=
-                        '<td><button type="button" onclick="showDetail(\''+result[i].id+'\')" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>&nbsp;详情</button></td>'+
+                        '<td><button type="button" onclick="showDetail(\''+result[i].id+'\')" class="btn btn-default btn-sm">&nbsp;详情</button></td>'+
                         '</tr>';
                 }
                 //添加列表数据

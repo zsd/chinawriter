@@ -45,9 +45,9 @@
 								<button type="button" id="del" class="btn btn-default">
 									删除<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
 								</button>
-								<button type="button" id="exp" class="btn btn-default" onclick="exportXml()">
-									导出<span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
-								</button>
+								<%--<button type="button" id="exp" class="btn btn-default" onclick="exportXml()">--%>
+									<%--导出<span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>--%>
+								<%--</button>--%>
 							</div>
 						</div>
 						<div class="col-sm-5" style="margin-right:0">
