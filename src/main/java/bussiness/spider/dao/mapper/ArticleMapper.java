@@ -49,4 +49,9 @@ public interface ArticleMapper {
      * 查询分页列表数量.
      */
     long count(String name);
+
+    /**
+     * 根据时间段获取文章列表,默认一周.
+     */
+    List<Article> getByTime();
 }

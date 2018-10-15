@@ -123,4 +123,14 @@ public class ArticleServiceImpl implements ArticleService {
             throw new ServiceException(e);
         }
     }
+
+    @Override
+    public List<Article> getByTime() {
+        try {
+            return articleDao.getByTime();
+        } catch (Exception e) {
+            logger.error("Search error!", e);
+            throw new ServiceException(e);
+        }
+    }
 }

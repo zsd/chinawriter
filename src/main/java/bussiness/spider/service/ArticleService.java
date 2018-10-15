@@ -3,6 +3,7 @@ package bussiness.spider.service;
 import bussiness.spider.domain.Article;
 import com.zsd.comm.orm.Page;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -52,5 +53,8 @@ public interface ArticleService {
      */
     Page<Article> search(Page<Article> page, Map<String, Object> param);
 
-
+    /**
+     * 根据时间段获取文章列表，默认7天。
+     */
+    List<Article> getByTime();
 }

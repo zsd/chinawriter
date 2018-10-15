@@ -107,4 +107,11 @@
         LIMIT #{skip,     jdbcType=NUMERIC  }, #{limit,     jdbcType=NUMERIC  }
     </select>
 
+    <!-- 根据时间段获取文章列表,默认一周 &lt;=(小于等于号) -->
+    <select id="getByTime" resultMap="articleMap">
+        select <include refid="sqlPart"/>
+        from <include refid="table-name"/>
+        where DATE_SUB(CURDATE(), INTERVAL 7 DAY) &lt;= date(publish_date)
+        ORDER BY publish_date DESC
+    </select>
 </mapper>

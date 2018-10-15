@@ -84,4 +84,13 @@ public class ArticleDao {
         page.setTotalCount(count);
         return page;
     }
+
+    public List<Article> getByTime() {
+        try {
+            return articleMapper.getByTime();
+        } catch (Exception e) {
+            logger.debug("Delete error!", e);
+            throw new DataAccessException(ArticleModule.ERR_DAO_GETBYID, e);
+        }
+    }
 }

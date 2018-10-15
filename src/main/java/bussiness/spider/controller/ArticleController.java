@@ -8,6 +8,8 @@ import com.zsd.comm.orm.Page;
 import com.zsd.comm.utils.ControllerUtils;
 import com.zsd.comm.utils.JsonMapper;
 import org.apache.commons.lang.StringUtils;
+import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.hssf.util.HSSFColor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +20,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -95,6 +102,65 @@ public class ArticleController {
             logger.error(e.getMessage());
         } finally {
             spiderStatusService.updateStatus(SpiderStatus.STATUS_NOEXE);
+        }
+    }
+
+    @RequestMapping(value = "export", method = RequestMethod.GET)
+    public void export(HttpServletRequest request, HttpServletResponse response) {
+        String[] headers = { "标题", "来源链接", "来源网站", "发布日期", "内容", "采集时间", "备注"};
+        List<Article> articleList = articleService.getByTime();
+        HSSFWorkbook workbook = new HSSFWorkbook();
+        HSSFSheet sheet = workbook.createSheet();
+//        //设置列宽
+//        sheet.setDefaultColumnWidth((short) 18);
+        //创建第一行的对象，第一行一般用于填充标题内容。从第二行开始一般是数据
+        HSSFRow row = sheet.createRow(0);
+        for (short i = 0; i < headers.length; i++) {
+            //创建单元格，每行多少数据就创建多少个单元格
+            HSSFCell cell = row.createCell(i);
+            HSSFRichTextString text = new HSSFRichTextString(headers[i]);
+            //给单元格设置内容
+            cell.setCellValue(text);
+        }
+        //遍历集合，将每个集合元素对象的每个值填充到单元格中
+        for(int i=0; i<articleList.size(); i++){
+            Article article = articleList.get(i);
+            //从第二行开始填充数据
+            row = sheet.createRow(i+1);
+            //该集合只记录数量和时间，这两个值来自statisticsModel。如果对象比较复杂，需要额外转换，比如Date类型的日期，int，float类型的数值
+            List<String> datas=new ArrayList<>();
+            String title = article.getName();
+            String fromUrl = article.getFromUrl();
+            String fromWeb = article.getFromWeb();
+            String publishDateStr = article.getPublishDate().toString();
+            String content = article.getContent();
+            String remark = article.getRemark();
+            String createTimeStr = article.getCreateTime().toString();
+            datas.add(title);
+            datas.add(fromUrl);
+            datas.add(fromWeb);
+            datas.add(publishDateStr);
+            datas.add(content);
+            datas.add(remark);
+            datas.add(createTimeStr);
+            for (int j=0; j<datas.size(); j++) {
+                String string=datas.get(j);
+                HSSFCell cell = row.createCell(j);
+                HSSFRichTextString richString = new HSSFRichTextString(string);
+                HSSFFont font3 = workbook.createFont();
+                font3.setColor(HSSFColor.BLUE.index); //定义Excel数据颜色，这里设置为蓝色
+                richString.applyFont(font3);
+                cell.setCellValue(richString);
+            }
+        }
+        response.setContentType("application/octet-stream");
+        response.setHeader("Content-disposition", "attachment;filename="+"Devices.xls"); //Excel文件名
+
+        try {
+            response.flushBuffer();
+            workbook.write(response.getOutputStream()); //将workbook中的内容写入输出流中
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

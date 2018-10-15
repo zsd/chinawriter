@@ -272,6 +272,10 @@ function formatDate (strTime) {
 }
 
 //导出数据
-function excute(){
-    jAlert('待开发！', '提示');
+function exportXml(){
+    $.ajax({
+        dataType: "json",
+        type: "get",
+        url: ctx + "/article/export"
+    });
 }

@@ -45,6 +45,9 @@
 								<button type="button" id="del" class="btn btn-default">
 									删除<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
 								</button>
+                                <button type="button" id="exp" class="btn btn-default" onclick="exportXml()">
+									导出<span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
+								</button>
 								<c:choose>
 									<c:when test="${spiderStatus.status eq '执行中'}">
 										<button type="button" id="spider1" class="btn btn-default" disabled="disabled">
