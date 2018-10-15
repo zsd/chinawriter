@@ -44,9 +44,11 @@ public class ArticleSpider implements PageProcessor {
             page.addTargetRequests(page.getHtml().links().regex(articleConfig.getArticleUrl()).all());
         } else { // 文章页面
             Article article = new Article(articleConfig.getFromWeb());
-            article.setFromUrl(page.getUrl().toString());
+            String fromUrl = page.getUrl().toString();
+            article.setFromUrl(fromUrl);
             article.setName(page.getHtml().xpath(articleConfig.getNamePath()).toString());
-            if (StringUtils.isBlank(article.getName())) { // 如果没有标题，就跳过
+            Article articleData = articleDao.getByFromUrl(fromUrl);
+            if (StringUtils.isBlank(article.getName()) || articleData != null) { // 如果没有标题,或者已经存在此内容，就跳过
                 page.setSkip(true);
             }
             // 处理发布日期
