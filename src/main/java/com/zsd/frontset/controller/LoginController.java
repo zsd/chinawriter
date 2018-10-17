@@ -67,7 +67,7 @@ public class LoginController {
         }
 
         user = SecurityContextHolder.getUser();
-        StringBuffer result = new StringBuffer("");
+        StringBuffer result = new StringBuffer();
         List<Function> list = functionService.getByUserId(user.getId(),"root");
 
         Map<String, String >  map = new HashMap<>() ;

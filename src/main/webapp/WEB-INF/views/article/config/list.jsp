@@ -6,7 +6,7 @@
 <html lang="zh-CN">
 <head>
 	<%@ include file="/common/meta.jsp"%>
-	<script type="text/javascript" src="${ctx}/js/bussiness/article/articleConfig.js"></script>
+	<script type="text/javascript" charset="utf-8" src="${ctx}/js/bussiness/article/articleConfig.js"></script>
 	<style>
 		td{
 			line-height: 30px!important;

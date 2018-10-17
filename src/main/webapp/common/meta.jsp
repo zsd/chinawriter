@@ -30,23 +30,23 @@
 <script type="text/javascript" src="${ctx}/js/lib/jquery.cookie.js" charset="utf-8"></script>
 <script type="text/javascript" src="${ctx}/js/lib/json2.js" charset="utf-8"></script>
 
-<script type="text/javascript" src="${ctx}/js/lib/console.compatibility.plugins.js"></script>
+<script type="text/javascript" src="${ctx}/js/lib/console.compatibility.plugins.js" charset="utf-8"></script>
 
-<script type="text/javascript" src="${ctx}/js/lib/artDialog/jquery.artDialog.js"></script>
-<script type="text/javascript" src="${ctx}/js/lib/artDialog/iframeTools.js"></script>
+<script type="text/javascript" src="${ctx}/js/lib/artDialog/jquery.artDialog.js" charset="utf-8"></script>
+<script type="text/javascript" src="${ctx}/js/lib/artDialog/iframeTools.js" charset="utf-8"></script>
 
 <!-- Bootstrap start -->
-<script src="${ctx}/js/lib/bootstrap/js/jquery-1.11.1.min.js"></script>
-<script src="${ctx}/js/lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="${ctx}/js/lib/bootstrap/js/jquery-1.11.1.min.js" charset="utf-8"></script>
+<script src="${ctx}/js/lib/bootstrap/js/bootstrap.min.js" charset="utf-8"></script>
 <!-- Bootstrap end -->
-<script type="text/javascript" src="${ctx}/js/boot/js/prettify.js"></script>
-<script type="text/javascript" src="${ctx}/js/boot/js/jquery-migrate-1.1.1.min.js"></script>
-<script type="text/javascript" src="${ctx}/js/boot/js/jquery-ui-1.9.2.min.js"></script>
-<script type="text/javascript" src="${ctx}/js/boot/js/colorpicker.js"></script>
-<script type="text/javascript" src="${ctx}/js/boot/js/jquery.jgrowl.js"></script>
-<script type="text/javascript" src="${ctx}/js/boot/js/jquery.alerts.js"></script>
+<script type="text/javascript" src="${ctx}/js/boot/js/prettify.js" charset="utf-8"></script>
+<script type="text/javascript" src="${ctx}/js/boot/js/jquery-migrate-1.1.1.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="${ctx}/js/boot/js/jquery-ui-1.9.2.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="${ctx}/js/boot/js/colorpicker.js" charset="utf-8"></script>
+<script type="text/javascript" src="${ctx}/js/boot/js/jquery.jgrowl.js" charset="utf-8"></script>
+<script type="text/javascript" src="${ctx}/js/boot/js/jquery.alerts.js" charset="utf-8"></script>
 <!-- 时间控件 start-->
-<script type="text/javascript" src="${ctx}/js/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="${ctx}/js/My97DatePicker/WdatePicker.js" charset="utf-8"></script>
 <!-- 时间控件 end-->
 
 <%-- end link javascript file --%>

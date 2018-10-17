@@ -273,9 +273,5 @@ function formatDate (strTime) {
 
 //导出数据
 function exportXml(){
-    $.ajax({
-        dataType: "json",
-        type: "get",
-        url: ctx + "/article/export"
-    });
+    location.href = ctx + "/article/export";
 }
