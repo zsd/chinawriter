@@ -109,7 +109,7 @@ public class ArticleController {
 //        sheet.setDefaultColumnWidth((short) 18);
         //创建第一行的对象，第一行一般用于填充标题内容。从第二行开始一般是数据
         HSSFRow row = sheet.createRow(0);
-        for (short i = 0; i < headers.length; i++) {
+        for (int i = 0; i < headers.length; i++) {
             //创建单元格，每行多少数据就创建多少个单元格
             HSSFCell cell = row.createCell(i);
             HSSFRichTextString text = new HSSFRichTextString(headers[i]);
