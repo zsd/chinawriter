@@ -42,7 +42,6 @@ public class ArticleServiceImpl implements ArticleService {
     public void spider() {
         try {
             logger.debug("start time:" + System.currentTimeMillis());
-            Thread.sleep(100000);
             //1、查出配置
             List<ArticleConfig> articleConfigList = articleConfigService.getAll();
             //2、根据配置，启动爬虫
@@ -125,9 +124,9 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public List<Article> getByTime() {
+    public List<Article> getByTime(String days) {
         try {
-            return articleDao.getByTime();
+            return articleDao.getByTime(days);
         } catch (Exception e) {
             logger.error("Search error!", e);
             throw new ServiceException(e);

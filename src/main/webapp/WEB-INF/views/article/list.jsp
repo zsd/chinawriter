@@ -45,13 +45,22 @@
 								<button type="button" id="del" class="btn btn-default">
 									删除<span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
 								</button>
-                                <button type="button" id="exp" class="btn btn-default" onclick="exportXml()">
-									导出<span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
+                                <button type="button" id="exp" class="btn btn-default" onclick="exportXml(7)">
+									7天<span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
 								</button>
+									<button type="button" id="exp" class="btn btn-default" onclick="exportXml(15)">
+										15天<span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
+									</button>
+									<button type="button" id="exp" class="btn btn-default" onclick="exportXml(30)">
+										30天<span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
+									</button>
+									<button type="button" id="exp" class="btn btn-default" onclick="exportXml(100000)">
+										全部<span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
+									</button>
 								<c:choose>
 									<c:when test="${spiderStatus.status eq '执行中'}">
 										<button type="button" id="spider1" class="btn btn-default" disabled="disabled">
-											采集中,启动时间：<fmt:formatDate pattern="yyyy-MM-dd hh:mm:ss"  value="${spiderStatus.createTime}"/>
+											采集中,启动时间：<fmt:formatDate pattern="yyyy-MM-dd hh:mm:ss"  value="${spiderStatus.updateTime}"/>
 										</button>
 									</c:when>
 									<c:otherwise>

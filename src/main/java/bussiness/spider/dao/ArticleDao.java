@@ -85,9 +85,9 @@ public class ArticleDao {
         return page;
     }
 
-    public List<Article> getByTime() {
+    public List<Article> getByTime(String days) {
         try {
-            return articleMapper.getByTime();
+            return articleMapper.getByTime(days);
         } catch (Exception e) {
             logger.debug("Delete error!", e);
             throw new DataAccessException(ArticleModule.ERR_DAO_GETBYID, e);

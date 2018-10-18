@@ -111,7 +111,7 @@
     <select id="getByTime" resultMap="articleMap">
         select <include refid="sqlPart"/>
         from <include refid="table-name"/>
-        where DATE_SUB(CURDATE(), INTERVAL 7 DAY) &lt;= date(publish_date)
+        where DATE_SUB(CURDATE(), INTERVAL #{days} DAY) &lt;= date(publish_date)
         ORDER BY publish_date DESC
     </select>
 </mapper>

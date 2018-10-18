@@ -14,19 +14,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.DateFormat;
+import java.util.*;
 
 /**
  * 作协活动控制器.
@@ -105,10 +100,10 @@ public class ArticleController {
         }
     }
 
-    @RequestMapping(value = "export", method = RequestMethod.GET)
-    public void export(HttpServletRequest request, HttpServletResponse response) {
+    @RequestMapping(value = "export/{days}", method = RequestMethod.GET)
+    public void export(@PathVariable("days") String days, HttpServletRequest request, HttpServletResponse response) {
         String[] headers = { "标题", "来源链接", "来源网站", "发布日期", "内容", "采集时间", "备注"};
-        List<Article> articleList = articleService.getByTime();
+        List<Article> articleList = articleService.getByTime(days);
         HSSFWorkbook workbook = new HSSFWorkbook();
         HSSFSheet sheet = workbook.createSheet();
 //        //设置列宽
@@ -132,30 +127,34 @@ public class ArticleController {
             String title = article.getName();
             String fromUrl = article.getFromUrl();
             String fromWeb = article.getFromWeb();
-            String publishDateStr = article.getPublishDate().toString();
+            String publishDateStr = DateFormat.getDateInstance(DateFormat.FULL).format(article.getPublishDate());
             String content = article.getContent();
             String remark = article.getRemark();
-            String createTimeStr = article.getCreateTime().toString();
+            String createTimeStr = DateFormat.getDateInstance(DateFormat.FULL).format(article.getCreateTime());
             datas.add(title);
             datas.add(fromUrl);
             datas.add(fromWeb);
             datas.add(publishDateStr);
             datas.add(content);
-            datas.add(remark);
             datas.add(createTimeStr);
+            datas.add(remark);
             for (int j=0; j<datas.size(); j++) {
                 String string=datas.get(j);
                 HSSFCell cell = row.createCell(j);
                 HSSFRichTextString richString = new HSSFRichTextString(string);
                 HSSFFont font3 = workbook.createFont();
-                font3.setColor(HSSFColor.BLUE.index); //定义Excel数据颜色，这里设置为蓝色
                 richString.applyFont(font3);
                 cell.setCellValue(richString);
             }
         }
         response.setContentType("application/octet-stream");
-        response.setHeader("Content-disposition", "attachment;filename="+"Devices.xls"); //Excel文件名
-
+        days = StringUtils.equals("100000", days) ? "all" : days;
+        StringBuilder fileName = new StringBuilder("attachment;filename=");
+        fileName.append("Article")
+                .append(DateFormat.getDateInstance(DateFormat.DEFAULT).format(new Date()))
+                .append("[").append(days).append("]")
+                .append(".xls");
+        response.setHeader("Content-disposition", fileName.toString()); //Excel文件名
         try {
             response.flushBuffer();
             workbook.write(response.getOutputStream()); //将workbook中的内容写入输出流中

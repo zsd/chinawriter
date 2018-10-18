@@ -272,6 +272,6 @@ function formatDate (strTime) {
 }
 
 //导出数据
-function exportXml(){
-    location.href = ctx + "/article/export";
+function exportXml(days){
+    location.href = ctx + "/article/export/" + days;
 }

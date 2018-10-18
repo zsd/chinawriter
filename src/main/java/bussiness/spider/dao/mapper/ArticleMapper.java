@@ -53,5 +53,5 @@ public interface ArticleMapper {
     /**
      * 根据时间段获取文章列表,默认一周.
      */
-    List<Article> getByTime();
+    List<Article> getByTime(String days);
 }

@@ -45,24 +45,26 @@ public class ArticleSpider implements PageProcessor {
         } else { // 文章页面
             Article article = new Article(articleConfig.getFromWeb());
             String fromUrl = page.getUrl().toString();
-            article.setFromUrl(fromUrl);
             article.setName(page.getHtml().xpath(articleConfig.getNamePath()).toString());
             Article articleData = articleDao.getByFromUrl(fromUrl);
             if (StringUtils.isBlank(article.getName()) || articleData != null) { // 如果没有标题,或者已经存在此内容，就跳过
                 page.setSkip(true);
+            } else {
+                // 处理发布日期
+                Date publishDate = null;
+                try {
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat(articleConfig.getPublishDateFormat());
+                    publishDate = simpleDateFormat.parse(page.getHtml().xpath(articleConfig.getPublishDatePath()).toString());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                article.setFromUrl(fromUrl);
+                article.setPublishDate(publishDate);
+                article.setContent(page.getHtml().xpath(articleConfig.getContentPath()).toString());
+                article.setRemark(articleConfig.getRemark());
+                logger.debug(article.toString());
+                this.articleDao.save(article);
             }
-            // 处理发布日期
-            Date publishDate = null;
-            try {
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat(articleConfig.getPublishDateFormat());
-                publishDate = simpleDateFormat.parse(page.getHtml().xpath(articleConfig.getPublishDatePath()).toString());
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            article.setPublishDate(publishDate);
-            article.setContent(page.getHtml().xpath(articleConfig.getContentPath()).toString());
-            logger.debug(article.toString());
-            this.articleDao.save(article);
         }
     }
 

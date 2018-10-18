@@ -56,5 +56,5 @@ public interface ArticleService {
     /**
      * 根据时间段获取文章列表，默认7天。
      */
-    List<Article> getByTime();
+    List<Article> getByTime(String days);
 }
